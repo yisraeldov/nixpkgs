@@ -28,9 +28,6 @@ assert !nativeTools ->
 assert !(nativeLibc && noLibc);
 assert (noLibc || nativeLibc) == (libc == null);
 
-# When bootstrapping `nixpkgs`, `gcc` currently fails to compile with LTO (link-time optimization)
-# support due to symbol errors when using glibc<2.33, so we disable it here.
-# The final gcc will have LTO enabled again.
 let cc' = if config.inBootstrap or false && cc ? override then cc.override { enableLTO = false; } else cc; in
 let cc = cc'; in
 let
